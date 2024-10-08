@@ -1,6 +1,8 @@
 ﻿using LinkDev.Talabat.Core.Domain.Common;
 using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
+using LinkDev.Talabat.Core.Domain.Entities.Products;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +16,18 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
         where TKey : IEquatable<TKey>
     {
         public async Task<IEnumerable<TEntity>> GetAllAsync(bool withTracking = false)
-            => withTracking ? await _dbContext.Set<TEntity>().ToListAsync() :
-                              await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
+        {
+            if (typeof(TEntity) == typeof(Product))
+            {
+                withTracking? await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).ToListAsync() :
+                              await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).AsNoTracking().ToListAsync();
+            }
+
+            withTracking? await _dbContext.Set<Product>().ToListAsync() :
+                          await _dbContext.Set<Product>().AsNoTracking().ToListAsync();
+
+        }
+
         ///{
         ///
         ///    if (withTracking) return await _dbContext.Set<TEntity>().ToListAsync();
@@ -24,7 +36,17 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
         ///
         ///}
 
-        public async Task<TEntity?> GetAsync(TKey id)=> await _dbContext.Set<TEntity>().FindAsync(id);
+        public async Task<TEntity?> GetAsync(TKey id)
+        {
+
+            if (typeof(TEntity) == typeof(Product))
+            {
+                return await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).FirstOrDefaultAsync(P => P.Id == id);
+            }
+
+            return await _dbContext.Set<TEntity>().FindAsync(id);
+
+        }
 
 
         public async Task AddAsync(TEntity entity) => await _dbContext.Set<TEntity>().AddAsync(entity);
