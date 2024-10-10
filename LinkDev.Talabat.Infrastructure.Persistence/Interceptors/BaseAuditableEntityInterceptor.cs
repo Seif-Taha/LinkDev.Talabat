@@ -39,22 +39,16 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Interceptors
 
             var utcNow = DateTime.UtcNow;
 
-            foreach (var entry in dbContext.ChangeTracker.Entries<BaseAuditableEntity<int>>())
+            foreach (var entry in dbContext.ChangeTracker.Entries<BaseAuditableEntity<int>>()
+                .Where(entity => entity.State is EntityState.Added or EntityState.Modified))
             {
-
-                if (entry is { State: EntityState.Added or EntityState.Modified })
+                if (entry.State == EntityState.Added)
                 {
-
-                    if (entry.State == EntityState.Added)
-                    {
-                        entry.Entity.CreatedBy = "";
-                        entry.Entity.CreatedOn = utcNow;
-                    }
-
-                    entry.Entity.LastModifiedBy = "";
-                    entry.Entity.LastModifiedOn = utcNow;
+                    entry.Entity.CreatedBy = _loggedInUserService.UserId!;
+                    entry.Entity.CreatedOn = utcNow;
                 }
-
+                entry.Entity.LastModifiedBy = _loggedInUserService.UserId!;
+                entry.Entity.LastModifiedOn = utcNow;
 
             }
 

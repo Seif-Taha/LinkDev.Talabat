@@ -30,6 +30,8 @@ namespace LinkDev.Talabat.APIs
 
 
             //WebApplicationBuilder.Services.AddScoped(typeof(IHttpContextAccessor) , typeof(HttpContextAccessor));
+
+            WebApplicationBuilder.Services.AddHttpContextAccessor();
             WebApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService) , typeof(LoggedInUserService));
             WebApplicationBuilder.Services.AddApplicationServices();
 
