@@ -15,7 +15,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
             services.AddDbContext<StoreContext>((optionsBulider) =>
             {
                 optionsBulider
-                .UseLazyLoadingProxies()
+                .UseLazyLoadingProxies() 
                 .UseSqlServer(configuration.GetConnectionString("StoreContext"));
             } /*,contextLifetime: ServiceLifetime.Scoped , optionsLifetime: ServiceLifetime.Scoped*/ );
 
