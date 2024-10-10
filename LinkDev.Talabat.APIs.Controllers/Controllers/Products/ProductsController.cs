@@ -47,6 +47,6 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
             var categories = await serviceManager.ProductService.GetCategoriesAsync();
             return Ok(categories);
         }
-
+ 
     }
 }
