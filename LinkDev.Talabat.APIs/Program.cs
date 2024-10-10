@@ -1,5 +1,9 @@
 using LinkDev.Talabat.APIs.Extensions;
+using LinkDev.Talabat.APIs.Services;
+using LinkDev.Talabat.APIs.Controllers;
+using LinkDev.Talabat.Core.Application.Abstraction;
 using LinkDev.Talabat.Core.Domain.Contracts;
+using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.Infrastructure.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
@@ -18,11 +22,20 @@ namespace LinkDev.Talabat.APIs
 
             // Add services to the container.
 
-            WebApplicationBuilder.Services.AddControllers();
+            WebApplicationBuilder.Services
+                .AddControllers()
+                .AddApplicationPart(typeof(Controllers.Controllers.AssemblyInformation).Assembly);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             WebApplicationBuilder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
 
+
+            //WebApplicationBuilder.Services.AddScoped(typeof(IHttpContextAccessor) , typeof(HttpContextAccessor));
+            WebApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService) , typeof(LoggedInUserService));
+            WebApplicationBuilder.Services.AddApplicationServices();
+
+
             WebApplicationBuilder.Services.AddPersistenceServices(WebApplicationBuilder.Configuration);
+
 
             #endregion
 
@@ -45,6 +58,8 @@ namespace LinkDev.Talabat.APIs
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.MapControllers();
 
