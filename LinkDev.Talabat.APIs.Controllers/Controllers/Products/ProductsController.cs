@@ -21,7 +21,7 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
         }
 
 
-        [HttpGet("{id}")] // GET : /api/products/id
+        [HttpGet("{id:int}")] // GET : /api/products/id
         public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts(int id)
         {
             var product = await serviceManager.ProductService.GetProductAsync(id);

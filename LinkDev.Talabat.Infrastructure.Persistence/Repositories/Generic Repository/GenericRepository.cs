@@ -51,7 +51,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Reposi
 
             if (typeof(TEntity) == typeof(Product))
             {
-                return await _dbContext.Set<Product>().Include(P => P.Brand).Where(P => P.Id == 10).Include(P => P.Category).FirstOrDefaultAsync() as TEntity;
+                return await _dbContext.Set<Product>().Include(P => P.Brand).Where(P => P.Id.Equals(id)).Include(P => P.Category).FirstOrDefaultAsync() as TEntity;
             }
 
             return await _dbContext.Set<TEntity>().FindAsync(id);
