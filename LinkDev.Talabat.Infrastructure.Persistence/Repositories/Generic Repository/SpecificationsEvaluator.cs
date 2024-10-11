@@ -18,10 +18,18 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Reposi
 
             // query = _dbContext.Set<Product>().Where(P => P.Id == 1)
 
+
+            if (spec.OrderByDesc is not null)
+                query = query.OrderByDescending(spec.OrderByDesc);
+            else if (spec.OrderBy is not null)
+                query = query.OrderBy(spec.OrderBy);
+
+
             query = spec.Includes.Aggregate(query, (currentQuery, include) => currentQuery.Include(include));
 
             // query = _dbContext.Set<Product>().Where(P => P.Id == 1).Include(P => P.Brand)
             // query = _dbContext.Set<Product>().Where(P => P.Id == 1).Include(P => P.Brand).Include(P => P.Category)
+
 
 
             return query;
