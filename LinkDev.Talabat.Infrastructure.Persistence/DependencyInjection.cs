@@ -15,7 +15,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
             services.AddDbContext<StoreContext>((optionsBulider) =>
             {
                 optionsBulider
-                .UseLazyLoadingProxies()
+                .UseLazyLoadingProxies() 
                 .UseSqlServer(configuration.GetConnectionString("StoreContext"));
             } /*,contextLifetime: ServiceLifetime.Scoped , optionsLifetime: ServiceLifetime.Scoped*/ );
 
@@ -25,7 +25,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
             services.AddScoped(typeof(IStoreContextIntializer), typeof(StoreContextIntializer));
 
             services.AddScoped(typeof(ISaveChangesInterceptor), typeof(BaseAuditableEntityInterceptor));
-
+            
             return services;
 
         }

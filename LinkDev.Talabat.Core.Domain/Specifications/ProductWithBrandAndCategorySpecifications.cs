@@ -20,7 +20,7 @@ namespace LinkDev.Talabat.Core.Domain.Specifications
         public ProductWithBrandAndCategorySpecifications(int id)
             :base(id)
         {
-            AddIncludes();
+            AddIncludes(); 
         }
 
         private void AddIncludes()

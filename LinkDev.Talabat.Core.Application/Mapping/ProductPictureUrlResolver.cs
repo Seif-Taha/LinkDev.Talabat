@@ -19,7 +19,7 @@ namespace LinkDev.Talabat.Core.Application.Mapping
                 return $"{configuration["Urls:ApiBaseUrl"]}/{source.PictureUrl}";
 
             return string.Empty;
-
+             
         }
     }
 }

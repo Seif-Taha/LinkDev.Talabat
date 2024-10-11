@@ -9,7 +9,6 @@ namespace LinkDev.Talabat.Core.Application.Abstraction
 {
     public interface IServiceManager
     {
-
         public IProductService ProductService { get; }
 
     }
