@@ -19,6 +19,8 @@ namespace LinkDev.Talabat.Core.Domain.Contracts.Persistence
 
         Task<TEntity?> GetWithSpecAsync(ISpecifications<TEntity, TKey> spec);
 
+        Task<int> GetCountAsync (ISpecifications<TEntity,TKey> spec);
+
         Task AddAsync(TEntity entity);
 
         void Update(TEntity entity);
