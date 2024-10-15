@@ -1,4 +1,5 @@
 ﻿using LinkDev.Talabat.APIs.Controllers.Controllers.Base;
+using LinkDev.Talabat.APIs.Controllers.Errors;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.APIs.Controllers.Controllers.Buggy
 {
-    public class BuggyController :ApiControllerBase
+    public class BuggyController : ApiControllerBase
     {
 
         [HttpGet("notfound")]    // Get: /api/buggy/notfound
-        public IActionResult GetNotFoundRequest() 
+        public IActionResult GetNotFoundRequest()
         {
-            return NotFound(new { StatusCode = 404 , Message = "NotFound" });  // 404
+            return NotFound(new ApiResponse(404));  // 404
         }
 
         [HttpGet("servererror")]    // Get: /api/buggy/servererror
@@ -27,19 +28,19 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Buggy
         [HttpGet("badrequest")]    // Get: /api/buggy/badrequest
         public IActionResult GetBadRequest()
         {
-            return BadRequest(new { StatusCode = 404, Message = "Bad Request" });  // 400
+            return BadRequest(new ApiResponse(400));  // 400
         }
 
         [HttpGet("badrequest/{id}")]    // Get: /api/buggy/badrequest/five
         public IActionResult GetValidationError(int id)  // => 400
         {
-            return Ok();  
+            return Ok();
         }
 
         [HttpGet("unauthorized")]    // Get: /api/buggy/unauthorized
         public IActionResult GetUnauthorizedError()
         {
-            return Unauthorized(new { StatusCode = 401, Message = "Unauthorized" });  // 401
+            return Unauthorized(new ApiResponse(401));  // 401
         }
 
         [HttpGet("forbidden")]    // Get: /api/buggy/unauthorized
