@@ -13,9 +13,9 @@ namespace LinkDev.Talabat.Core.Application
     public static class DependancyInjection
     {
 
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services) 
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            
+
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddScoped(typeof(IServiceManager), typeof(ServiceManager));
@@ -23,13 +23,13 @@ namespace LinkDev.Talabat.Core.Application
             //services.AddScoped(typeof(IBasketService), typeof(BasketService));
             //services.AddScoped(typeof(Func<IBasketService>), typeof(Func<BasketService>));
 
-            services.AddScoped(typeof(Func<IBasketService>), (servicesProvider)=>
-            { 
+            services.AddScoped(typeof(Func<IBasketService>), (servicesProvider) =>
+            {
                 var mapper = servicesProvider.GetRequiredService<IMapper>();
                 var configuration = servicesProvider.GetRequiredService<IConfiguration>();
                 var basketRepoistory = servicesProvider.GetRequiredService<IBasketRepoistory>();
 
-                return new BasketService(basketRepoistory,mapper,configuration);
+                return () => new BasketService(basketRepoistory, mapper, configuration);
 
             });
 
