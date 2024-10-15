@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using LinkDev.Talabat.APIs.Controllers.Errors;
 using LinkDev.Talabat.APIs.Middlewares;
+using LinkDev.Talabat.Infrastructure;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -54,6 +55,8 @@ namespace LinkDev.Talabat.APIs
             WebApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
             WebApplicationBuilder.Services.AddApplicationServices();
 
+
+            WebApplicationBuilder.Services.AddInfrastructureServices(WebApplicationBuilder.Configuration);
 
             WebApplicationBuilder.Services.AddPersistenceServices(WebApplicationBuilder.Configuration);
 
