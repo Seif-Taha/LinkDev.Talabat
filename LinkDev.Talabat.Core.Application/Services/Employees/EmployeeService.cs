@@ -12,32 +12,32 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Application.Services.Employees
 {
-    internal class EmployeeService(IUnitOfWork unitOfWork , IMapper mapper) : IEmployeeService
-    {
-        public async Task<IEnumerable<EmployeeToReturnDto>> GetEmployeesAsync()
-        {
+    //internal class EmployeeService(IUnitOfWork unitOfWork , IMapper mapper) : IEmployeeService
+    //{
+    //    public async Task<IEnumerable<EmployeeToReturnDto>> GetEmployeesAsync()
+    //    {
 
-            var spec = new EmployeeWithDepartmentSpecifications();
+    //        var spec = new EmployeeWithDepartmentSpecifications();
 
-            var employees = await unitOfWork.GetRepository<Employee, int>().GetAllWithSpecAsync(spec);
+    //        var employees = await unitOfWork.GetRepository<Employee, int>().GetAllWithSpecAsync(spec);
 
-            var employeesToReturn = mapper.Map<IEnumerable<EmployeeToReturnDto>>(employees);
+    //        var employeesToReturn = mapper.Map<IEnumerable<EmployeeToReturnDto>>(employees);
 
-            return employeesToReturn;
-        }
+    //        return employeesToReturn;
+    //    }
 
-        public async Task<EmployeeToReturnDto> GetEmployeeAsync(int id)
-        {
-            var spec = new EmployeeWithDepartmentSpecifications(id);
+    //    public async Task<EmployeeToReturnDto> GetEmployeeAsync(int id)
+    //    {
+    //        var spec = new EmployeeWithDepartmentSpecifications(id);
 
-            var employee = await unitOfWork.GetRepository<Employee, int>().GetWithSpecAsync(spec);
+    //        var employee = await unitOfWork.GetRepository<Employee, int>().GetWithSpecAsync(spec);
 
-            var employeeToReturn = mapper.Map<IEnumerable<EmployeeToReturnDto>>(employee);
+    //        var employeeToReturn = mapper.Map<IEnumerable<EmployeeToReturnDto>>(employee);
 
-            return employeeToReturn;
-        }
+    //        return employeeToReturn;
+    //    }
 
 
-    }
+    //}
 
 }

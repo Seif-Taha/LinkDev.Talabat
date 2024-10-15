@@ -12,18 +12,49 @@ namespace LinkDev.Talabat.Core.Domain.Specifications
         where TEntity : BaseAuditableEntity<TKey>
         where TKey : IEquatable<TKey>
     {
-        public Expression<Func<TEntity, bool>>? Criteria {  get; set; } = null;
-        public List<Expression<Func<TEntity, object>>> Includes { get; set; } = new ();
+        public Expression<Func<TEntity, bool>>? Criteria { get; set; } = null;
+        public List<Expression<Func<TEntity, object>>> Includes { get; set; } = new();
+        public Expression<Func<TEntity, object>>? OrderBy { get; set; } = null;
+        public Expression<Func<TEntity, object>>? OrderByDesc { get; set; } = null;
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public bool IsPaginationEnabled { get; set; }
 
-
-        public BaseSpecifications()
+        protected BaseSpecifications()
         {
-            //Criteria = null;
-        }        
+            
+        }
+
+        protected BaseSpecifications(Expression<Func<TEntity, bool>> criteriaExpression)
+        {
+            Criteria = criteriaExpression;
+        }
         
-        public BaseSpecifications(TKey id)
+        protected BaseSpecifications(TKey id)
         {
             Criteria = E => E.Id.Equals(id);
+        }
+
+        private protected virtual void AddIncludes()
+        {
+
+        }
+
+        private protected virtual void AddOrderBy(Expression<Func<TEntity, object>> orderByExpression)
+        {
+            OrderBy = orderByExpression;
+        }
+
+        private protected virtual void AddOrderByDesc(Expression<Func<TEntity, object>> orderByDescExpression)
+        {
+            OrderByDesc = orderByDescExpression;
+        }
+
+        private protected void ApplyPagination(int skip, int take)
+        { 
+            IsPaginationEnabled = true;
+            Skip = skip;
+            Take = take;
         }
 
     }

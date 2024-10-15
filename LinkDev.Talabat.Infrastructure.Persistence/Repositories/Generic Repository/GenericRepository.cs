@@ -20,12 +20,12 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Reposi
         {
             if (typeof(TEntity) == typeof(Product))
             {
-                return (IEnumerable<TEntity>) (withTracking? 
+                return (IEnumerable<TEntity>)(withTracking ?
                     await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).ToListAsync() :
                     await _dbContext.Set<Product>().Include(P => P.Brand).Include(P => P.Category).AsNoTracking().ToListAsync());
-            } 
+            }
 
-            return withTracking? 
+            return withTracking ?
                     await _dbContext.Set<TEntity>().ToListAsync() :
                     await _dbContext.Set<TEntity>().AsNoTracking().ToListAsync();
 
@@ -65,6 +65,11 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Reposi
         }
 
 
+        public async Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec)
+        {
+            return await ApplySpecifications(spec).CountAsync();
+        }
+
 
         public async Task AddAsync(TEntity entity) => await _dbContext.Set<TEntity>().AddAsync(entity);
 
@@ -81,6 +86,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Reposi
         {
             return SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec);
         }
+
 
         #endregion
 
