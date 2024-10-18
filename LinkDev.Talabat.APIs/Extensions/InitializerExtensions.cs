@@ -1,14 +1,15 @@
-﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
+﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbInitializer;
 
 namespace LinkDev.Talabat.APIs.Extensions
 {
     public static class InitializerExtensions
     {
-        public static async Task<WebApplication> InitializeStoreContextAsync(this WebApplication app)
+        public static async Task<WebApplication> InitializeDbAsync(this WebApplication app)
         {
             using var scope = app.Services.CreateAsyncScope();
             var services = scope.ServiceProvider;
-            var storeContextIntializer = services.GetRequiredService<IStoreContextIntializer>();
+            var storeContextIntializer = services.GetRequiredService<IStoreDbIntializer>();
+            var storeIdentityContextIntializer = services.GetRequiredService<IStoreIdentityDbInitializer>();
             // Ask Runtime Eny For An Object from "StoreContext" Service Explicitly.
 
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
@@ -19,6 +20,10 @@ namespace LinkDev.Talabat.APIs.Extensions
 
                 await storeContextIntializer.InitializeAsync();
                 await storeContextIntializer.SeedAsync();
+
+
+                await storeIdentityContextIntializer.InitializeAsync();
+                await storeIdentityContextIntializer.SeedAsync();
 
             }
             catch (Exception ex)

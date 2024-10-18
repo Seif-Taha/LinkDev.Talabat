@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence._Identity
 {
-    internal class StoreIdentityContext : IdentityDbContext<ApplicationUser>
+    public class StoreIdentityContext : IdentityDbContext<ApplicationUser>
     {
 
         public StoreIdentityContext(DbContextOptions<StoreIdentityContext> options)
