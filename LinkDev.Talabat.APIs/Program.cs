@@ -35,11 +35,11 @@ namespace LinkDev.Talabat.APIs
                     {
 
                         var errors = actionContext.ModelState.Where(P => P.Value!.Errors.Count > 0)
-                                               .Select(P => new ApiValidationErrorResponse.ValidationError() 
-                                               { 
-                                                    Field = P.Key,
-                                                    Errors = P.Value!.Errors.Select(E=>E.ErrorMessage)
-                                               } );
+                                               .Select(P => new ApiValidationErrorResponse.ValidationError()
+                                               {
+                                                   Field = P.Key,
+                                                   Errors = P.Value!.Errors.Select(E => E.ErrorMessage)
+                                               });
 
                         return new BadRequestObjectResult(new ApiValidationErrorResponse()
                         {
@@ -70,14 +70,14 @@ namespace LinkDev.Talabat.APIs
                 identityOptions.SignIn.RequireConfirmedAccount = true;
                 identityOptions.SignIn.RequireConfirmedEmail = true;
                 identityOptions.SignIn.RequireConfirmedPhoneNumber = true;
+                
 
-
-                identityOptions.Password.RequireNonAlphanumeric = true;  // #@$%
-                identityOptions.Password.RequiredUniqueChars = 2;
-                identityOptions.Password.RequiredLength = 6;
-                identityOptions.Password.RequireDigit = true;
-                identityOptions.Password.RequireLowercase = true;
-                identityOptions.Password.RequireUppercase = true;
+                /// identityOptions.Password.RequireNonAlphanumeric = true;  // #@$%
+                /// identityOptions.Password.RequiredUniqueChars = 2;
+                /// identityOptions.Password.RequiredLength = 6;
+                /// identityOptions.Password.RequireDigit = true;
+                /// identityOptions.Password.RequireLowercase = true;
+                /// identityOptions.Password.RequireUppercase = true;
 
 
                 identityOptions.User.RequireUniqueEmail = true;
