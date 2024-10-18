@@ -1,4 +1,5 @@
 ﻿using LinkDev.Talabat.APIs.Controllers.Controllers.Base;
+using LinkDev.Talabat.APIs.Controllers.Errors;
 using LinkDev.Talabat.Core.Application.Abstraction;
 using LinkDev.Talabat.Core.Application.Abstraction.Common;
 using LinkDev.Talabat.Core.Application.Abstraction.Products.Models;
@@ -26,10 +27,6 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
         public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProducts(int id)
         {
             var product = await serviceManager.ProductService.GetProductAsync(id);
-
-            if (product == null)
-                return NotFound();
-
             return Ok(product);
         }
 
