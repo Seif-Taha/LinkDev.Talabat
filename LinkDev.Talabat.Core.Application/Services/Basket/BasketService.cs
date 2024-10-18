@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LinkDev.Talabat.APIs.Controllers.Exceptions;
+using LinkDev.Talabat.Core.Application.Exceptions;
 using LinkDev.Talabat.Core.Application.Abstraction.Basket;
 using LinkDev.Talabat.Core.Application.Abstraction.Basket.Models;
 using LinkDev.Talabat.Core.Domain.Contracts.Infrastructure;

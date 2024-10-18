@@ -35,8 +35,12 @@ namespace LinkDev.Talabat.APIs
                     {
 
                         var errors = actionContext.ModelState.Where(P => P.Value!.Errors.Count > 0)
-                                               .SelectMany(P => P.Value!.Errors)
-                                               .Select(E => E.ErrorMessage);
+                                               .Select(P => new ApiValidationErrorResponse.ValidationError() 
+                                               { 
+                                                    Field = P.Key,
+                                                    Errors = P.Value!.Errors.Select(E=>E.ErrorMessage)
+                                               } );
+
                         return new BadRequestObjectResult(new ApiValidationErrorResponse()
                         {
                             Errors = errors
@@ -45,6 +49,7 @@ namespace LinkDev.Talabat.APIs
                 }
                 )
                 .AddApplicationPart(typeof(Controllers.Controllers.AssemblyInformation).Assembly);
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             WebApplicationBuilder.Services.AddEndpointsApiExplorer().AddSwaggerGen();
 
@@ -76,7 +81,7 @@ namespace LinkDev.Talabat.APIs
 
             // Configure the HTTP request pipeline.
 
-            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 
             if (app.Environment.IsDevelopment())
