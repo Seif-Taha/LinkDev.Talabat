@@ -15,8 +15,8 @@ namespace LinkDev.Talabat.Core.Application.Services.Basket
             var basket = await basketRepoistory.GetAsync(basketId);
 
             if (basket is null)
-                throw new NotFoundException();
-                //throw new NotFoundException(nameof(CustomerBasket), basketId);
+                //throw new NotFoundException();
+                throw new NotFoundException(nameof(CustomerBasket), basketId);
 
             return mapper.Map<CustomerBasketDto>(basket);
 
