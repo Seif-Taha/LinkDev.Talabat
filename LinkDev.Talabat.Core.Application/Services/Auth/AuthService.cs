@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Application.Services.Auth
 {
-    internal class AuthService(
+    public class AuthService(
         IOptions<JWTSettings> jwtSettings,
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager) : IAuthService
@@ -29,7 +29,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
         {
             var user = await userManager.FindByEmailAsync(model.Email);
             if (user is null)
-                throw new BadRequestException("Invalid Login");
+                throw new UnAuthorizedException("Invalid Login");
 
             var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
             if (!result.Succeeded)
