@@ -29,11 +29,19 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
         {
             var user = await userManager.FindByEmailAsync(model.Email);
             if (user is null)
-                throw new UnAuthorizedException("Invalid Login");
+                throw new UnAuthorizedException("Invalid Login.");
 
             var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, lockoutOnFailure: true);
-            if (!result.Succeeded)
-                throw new BadRequestException("Invalid Login");
+
+
+            if (result.IsNotAllowed) throw new UnAuthorizedException("Account not confirmed yet.");
+
+            if (result.IsLockedOut) throw new UnAuthorizedException("Account is Locked.");
+
+            //if (result.RequiresTwoFactor) throw new UnAuthorizedException("Requires Two-Factor Authentication.");
+
+            if (!result.Succeeded) throw new UnAuthorizedException("Invalid Login.");
+
 
             var response = new UserDto()
             {
@@ -57,12 +65,12 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
                 PhoneNumber = registerDto.Phone
             };
 
-            var result = await userManager.CreateAsync(user,registerDto.Password);
+            var result = await userManager.CreateAsync(user, registerDto.Password);
 
-            if(!result.Succeeded)
-                throw new ValidationException() 
-                { 
-                    Errors = result.Errors.Select(E=>E.Description)
+            if (!result.Succeeded)
+                throw new ValidationException()
+                {
+                    Errors = result.Errors.Select(E => E.Description)
                 };
 
             var response = new UserDto()
@@ -99,10 +107,10 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
                 issuer: _jwtSettings.Issuer,
                 expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMintues),
                 claims: privateClaims,
-                signingCredentials: new SigningCredentials(authKey,SecurityAlgorithms.HmacSha256)
-                ); 
+                signingCredentials: new SigningCredentials(authKey, SecurityAlgorithms.HmacSha256)
+                );
 
-            return new JwtSecurityTokenHandler().WriteToken(tokenObj); 
+            return new JwtSecurityTokenHandler().WriteToken(tokenObj);
         }
 
     }

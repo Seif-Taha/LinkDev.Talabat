@@ -23,5 +23,6 @@ namespace LinkDev.Talabat.Core.Application.Abstraction.Auth.Models
         ErrorMessage = "Password must have 1 uppercase, 1 lowercase, 1 number, 1 non-alphanumeric, and be between 6-10 characters.")]
         public required string Password { get; set; }
 
+
     }
 }
