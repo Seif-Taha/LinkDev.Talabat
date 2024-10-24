@@ -17,7 +17,7 @@ namespace LinkDev.Talabat.APIs.Extensions
 
             services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
 
-
+             
             services.AddIdentity<ApplicationUser, IdentityRole>((identityOptions) =>
             {
                 ///identityOptions.SignIn.RequireConfirmedAccount = true;
