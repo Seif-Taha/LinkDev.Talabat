@@ -37,7 +37,7 @@ namespace LinkDev.Talabat.APIs.Extensions
 
 
                 identityOptions.Lockout.AllowedForNewUsers = true;
-                identityOptions.Lockout.MaxFailedAccessAttempts = 5;
+                identityOptions.Lockout.MaxFailedAccessAttempts = 10;
                 identityOptions.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(12);
 
 
