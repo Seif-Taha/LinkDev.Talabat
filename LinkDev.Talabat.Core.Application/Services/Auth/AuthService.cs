@@ -99,7 +99,7 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
 
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
 
-
+            
             var tokenObj = new JwtSecurityToken(
 
                 audience: _jwtSettings.Audience,
