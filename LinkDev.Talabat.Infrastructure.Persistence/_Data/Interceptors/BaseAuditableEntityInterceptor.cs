@@ -3,7 +3,7 @@ using LinkDev.Talabat.Core.Domain.Common;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace LinkDev.Talabat.Infrastructure.Persistence.Interceptors
+namespace LinkDev.Talabat.Infrastructure.Persistence._Data.Interceptors
 {
     public class BaseAuditableEntityInterceptor : SaveChangesInterceptor
     {

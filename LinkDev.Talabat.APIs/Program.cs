@@ -1,16 +1,17 @@
-using LinkDev.Talabat.APIs.Extensions;
-using LinkDev.Talabat.APIs.Services;
-using LinkDev.Talabat.APIs.Controllers;
-using LinkDev.Talabat.Core.Application.Abstraction;
-using LinkDev.Talabat.Core.Domain.Contracts;
-using LinkDev.Talabat.Core.Application;
-using LinkDev.Talabat.Infrastructure.Persistence;
-using LinkDev.Talabat.Infrastructure.Persistence.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using LinkDev.Talabat.APIs.Controllers.Errors;
+using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.APIs.Middlewares;
+using LinkDev.Talabat.APIs.Services;
+using LinkDev.Talabat.Core.Application;
+using LinkDev.Talabat.Core.Application.Abstraction;
+using LinkDev.Talabat.Core.Application.Abstraction.Auth.Models;
+using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure;
+using LinkDev.Talabat.Infrastructure.Persistence;
+using LinkDev.Talabat.Infrastructure.Persistence._Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -35,11 +36,11 @@ namespace LinkDev.Talabat.APIs
                     {
 
                         var errors = actionContext.ModelState.Where(P => P.Value!.Errors.Count > 0)
-                                               .Select(P => new ApiValidationErrorResponse.ValidationError() 
-                                               { 
-                                                    Field = P.Key,
-                                                    Errors = P.Value!.Errors.Select(E=>E.ErrorMessage)
-                                               } );
+                                               .Select(P => new ApiValidationErrorResponse.ValidationError()
+                                               {
+                                                   Field = P.Key,
+                                                   Errors = P.Value!.Errors.Select(E => E.ErrorMessage)
+                                               });
 
                         return new BadRequestObjectResult(new ApiValidationErrorResponse()
                         {
@@ -58,12 +59,13 @@ namespace LinkDev.Talabat.APIs
 
             WebApplicationBuilder.Services.AddHttpContextAccessor();
             WebApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
+
+
             WebApplicationBuilder.Services.AddApplicationServices();
-
-
+            WebApplicationBuilder.Services.AddPersistenceServices(WebApplicationBuilder.Configuration);
             WebApplicationBuilder.Services.AddInfrastructureServices(WebApplicationBuilder.Configuration);
 
-            WebApplicationBuilder.Services.AddPersistenceServices(WebApplicationBuilder.Configuration);
+            WebApplicationBuilder.Services.AddIdentityServices(WebApplicationBuilder.Configuration);
 
 
             #endregion
@@ -72,7 +74,7 @@ namespace LinkDev.Talabat.APIs
 
             #region Databases Initialization
 
-            await app.InitializeStoreContextAsync();
+            await app.InitializeDbAsync();
 
             #endregion
 
