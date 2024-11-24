@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Config.Base
 {
-    internal class BaseAuditableEntityConfigurations<TEntity, TKey> : BaseEntityConfigurations<TEntity,TKey>
+    public class BaseAuditableEntityConfigurations<TEntity, TKey> : BaseEntityConfigurations<TEntity,TKey>
         where TEntity : BaseAuditableEntity<TKey> 
         where TKey : IEquatable<TKey>
     {
