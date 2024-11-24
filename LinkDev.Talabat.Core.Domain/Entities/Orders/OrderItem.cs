@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace LinkDev.Talabat.Core.Domain.Entities.Orders
 {
     public class OrderItem : BaseAuditableEntity<int>
     {
-        public required ProductItemOrder Product { get; set; }
+        public virtual ProductItemOrder Product { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
 

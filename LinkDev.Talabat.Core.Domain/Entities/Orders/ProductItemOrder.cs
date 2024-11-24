@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,11 @@ namespace LinkDev.Talabat.Core.Domain.Entities.Orders
         public int ProductId { get; set; }
         public required string ProductName { get; set; }
         public required string PictureUrl { get; set; }
+
+        public ProductItemOrder()
+        {
+            
+        }
 
     }
 }

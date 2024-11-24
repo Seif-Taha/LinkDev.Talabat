@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Core.Domain.Entities.Orders
 {
+    [Keyless]
     public class Address
     {
 
@@ -14,6 +16,5 @@ namespace LinkDev.Talabat.Core.Domain.Entities.Orders
         public required string Street { get; set; }
         public required string City { get; set; }
         public required string Country { get; set; }
-
     }
 }
